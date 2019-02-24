@@ -117,7 +117,8 @@ public class ConnectFour {
 
     private boolean didPlayerwin(){
         return checkHorizontal()
-                || checkVertical();
+                || checkVertical()
+                || checkDiagonal();
     }
 
     private void endGame(){
@@ -129,8 +130,9 @@ public class ConnectFour {
         boolean win = false;
         Color[][] board = getBoard();
         for (int i = 0; i < rowSize; i++) {
-            for (int j = 0; j < colSize - 3; j++) {
-                if (board[i][j].equals(board[i][j + 1]) &&
+            for (int j = 0; j < colSize-3; j++) {
+                if ((board[i][j].equals(Color.RED) || board[i][j].equals(Color.BLACK)) &&
+                        board[i][j].equals(board[i][j + 1]) &&
                         board[i][j].equals(board[i][j + 2]) &&
                         board[i][j].equals(board[i][j + 3])) {
                     win = true;
@@ -145,7 +147,8 @@ public class ConnectFour {
         Color[][] board = getBoard();
         for (int i = 0; i < rowSize-3; i++) {
             for (int j = 0; j < colSize; j++) {
-                if (board[i][j].equals(board[i+1][j]) &&
+                if ((board[i][j].equals(Color.RED) || board[i][j].equals(Color.BLACK)) &&
+                        board[i][j].equals(board[i+1][j]) &&
                         board[i][j].equals(board[i+2][j]) &&
                         board[i][j].equals(board[i+3][j])) {
                         win = true;
@@ -160,7 +163,21 @@ public class ConnectFour {
         Color[][] board = getBoard();
         for (int i = colSize; i > 3; i--) {
             for (int j = rowSize; j > 4; j--) {
-                if (board[i][j].equals(currentPlayer.getColor())) {
+                if ((board[i][j].equals(Color.RED) || board[i][j].equals(Color.BLACK)) &&
+                        board[i][j].equals(board[i-1][j-1]) &&
+                        board[i][j].equals(board[i-2][j-2]) &&
+                        board[i][j].equals(board[i-3][j-3])) {
+                    win = true;
+                }
+            }
+        }
+        for (int i = colSize; i > 3; i--) {
+            for (int j = rowSize-4; j > 0; j--) {
+                if ((board[i][j].equals(Color.RED) || board[i][j].equals(Color.BLACK)) &&
+                        board[i][j].equals(board[i-1][j+1]) &&
+                        board[i][j].equals(board[i-2][j+2]) &&
+                        board[i][j].equals(board[i-3][j+3])) {
+                    win = true;
                 }
             }
         }
