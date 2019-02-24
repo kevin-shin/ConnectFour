@@ -96,10 +96,10 @@ public class ConnectFour {
         }
 
     private void switchPlayer(){
-        if (currentPlayer == player1){
+        if (currentPlayer.equals(player1)){
             currentPlayer = player2;
         }
-        else if (currentPlayer == player2){
+        else if (currentPlayer.equals(player2)){
             currentPlayer = player1;
         }
     }
@@ -116,8 +116,8 @@ public class ConnectFour {
     }
 
     private boolean didPlayerwin(){
-        return checkHorizontal(currentPlayer.getColor())
-                || checkVertical(currentPlayer.getColor());
+        return checkHorizontal()
+                || checkVertical();
     }
 
     private void endGame(){
@@ -125,41 +125,48 @@ public class ConnectFour {
         winner = true;
     }
 
-    private boolean checkHorizontal(Color color){
+    private boolean checkHorizontal() {
         boolean win = false;
         Color[][] board = getBoard();
-        int count = 0;
         for (int i = 0; i < rowSize; i++) {
-            for (int j = 0; j < colSize; j++) {
-                if (board[i][j].equals(color)){
-                    count++;
+            for (int j = 0; j < colSize - 3; j++) {
+                if (board[i][j].equals(board[i][j + 1]) &&
+                        board[i][j].equals(board[i][j + 2]) &&
+                        board[i][j].equals(board[i][j + 3])) {
+                    win = true;
                 }
-                else {count = 0;}
-            }
-            if (count == 4){
-                win = true;
             }
         }
         return win;
     }
 
-    private boolean checkVertical(Color color){
+    private boolean checkVertical(){
         boolean win = false;
         Color[][] board = getBoard();
-        int count = 0;
-        for (int j = 0; j < colSize; j++) {
-            for (int i = 0; i < rowSize; i++) {
-                if (board[i][j].equals(color)){
-                    count++;
+        for (int i = 0; i < rowSize-3; i++) {
+            for (int j = 0; j < colSize; j++) {
+                if (board[i][j].equals(board[i+1][j]) &&
+                        board[i][j].equals(board[i+2][j]) &&
+                        board[i][j].equals(board[i+3][j])) {
+                        win = true;
+                    }
                 }
-                else {count = 0;}
             }
-            if (count == 4){
-                win = true;
+        return win;
+    }
+
+    private boolean checkDiagonal() {
+        boolean win = false;
+        Color[][] board = getBoard();
+        for (int i = colSize; i > 3; i--) {
+            for (int j = rowSize; j > 4; j--) {
+                if (board[i][j].equals(currentPlayer.getColor())) {
+                }
             }
         }
         return win;
     }
+
 
     public void run() {
         while (!winner){
