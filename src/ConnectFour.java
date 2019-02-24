@@ -1,5 +1,3 @@
-import java.io.*;
-import java.util.*;
 import java.util.Scanner;
 
 public class ConnectFour {
@@ -196,7 +194,18 @@ public class ConnectFour {
 
     public static void main(String[] args) {
         ConnectFour cf = new ConnectFour();
-        cf.initialize();
-        cf.run();
+        boolean playAgain = true;
+        Scanner scanner = new Scanner(System.in);
+        while (playAgain) {
+            cf.initialize();
+            cf.run();
+            System.out.println("Play again? Yes/No");
+            String me = scanner.nextLine();
+
+            if ((!me.equalsIgnoreCase("Yes"))){
+                playAgain = false;
+            }
+
+        }
     }
 }
