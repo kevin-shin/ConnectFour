@@ -171,8 +171,8 @@ public class ConnectFour {
                 }
             }
         }
-        for (int i = 0; i < rowSize; i++) {
-            for (int j = colSize-1; j > 2; j--) {
+        for (int i = rowSize-1; i > 2; i--) {
+            for (int j = 0; j < colSize-3; j++) {
                 if ((board[i][j].equals(Color.RED) || board[i][j].equals(Color.BLACK)) &&
                         board[i][j].equals(board[i-1][j+1]) &&
                         board[i][j].equals(board[i-2][j+2]) &&
@@ -183,7 +183,6 @@ public class ConnectFour {
         }
         return win;
     }
-
 
     public void run() {
         while (!winner){
