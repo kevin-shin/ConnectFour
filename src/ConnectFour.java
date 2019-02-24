@@ -54,7 +54,13 @@ public class ConnectFour {
     public void displayBoard() {
         for (int i = 0; i < rowSize; i++) {
             for (int j = 0; j < colSize; j++) {
-                System.out.print(board[i][j] + " ");
+                Color cell = board[i][j];
+                if (cell.equals(Color.RED)){
+                    System.out.print(" " + cell + "  ");
+                }
+                else {
+                    System.out.print(cell + " ");
+                }
             }
             System.out.println(" ");
         }
