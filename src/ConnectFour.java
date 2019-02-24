@@ -25,12 +25,10 @@ public class ConnectFour {
     private Player player1;
     private Player player2;
     private Player currentPlayer;
+    private boolean winner;
     private Color[][] board = new Color[colSize][rowSize];
     private Scanner scanner = new Scanner(System.in);
 
-    public Color[][] getBoard() {
-        return board;
-    }
 
     public void initialize() {
         if (colSize <= 4 || rowSize <= 4) {
@@ -49,9 +47,14 @@ public class ConnectFour {
         player2 = new Player(Color.BLACK);
 
         currentPlayer = player1;
+        winner = false;
     }
 
     public void displayBoard() {
+        for (int i = 0; i < colSize; i++) {
+            System.out.print("  " + i + "   ");
+        }
+        System.out.println(" ");
         for (int i = 0; i < rowSize; i++) {
             for (int j = 0; j < colSize; j++) {
                 Color cell = board[i][j];
@@ -67,10 +70,17 @@ public class ConnectFour {
     }
 
     private void playerMove() {
+        displayBoard();
         System.out.println(" ");
         System.out.println("It's your turn player " + currentPlayer.getColor() + ". Which column would you like to choose?");
         updateBoard();
-
+        if (didPlayerwin()){
+            displayBoard();
+            endGame();
+        }
+        else {
+            switchPlayer();
+        }
     }
 
     private void updateBoard() {
@@ -79,16 +89,18 @@ public class ConnectFour {
             for (int i = rowSize - 1; i >= 0; i--) {
                 if (board[i][col].equals(Color.EMPTY)) {
                     board[i][col] = currentPlayer.getColor();
-                    if (currentPlayer == player1){
-                        currentPlayer = player2;
-                    }
-                    else if (currentPlayer == player2){
-                        currentPlayer = player1;
-                    }
                     return;
+                    }
                 }
             }
-            System.out.println("Illegal Move. Try again.");
+        }
+
+    private void switchPlayer(){
+        if (currentPlayer == player1){
+            currentPlayer = player2;
+        }
+        else if (currentPlayer == player2){
+            currentPlayer = player1;
         }
     }
 
@@ -96,19 +108,67 @@ public class ConnectFour {
         while (true) {
             System.out.println(">>> ");
             Integer userInput = scanner.nextInt();
-            if (userInput >= 0 && userInput < rowSize){
+            if (userInput >= 0 && userInput <= rowSize){
                 return userInput;
             }
+            System.out.println("Illegal Move. Try again.");
         }
     }
 
+    private boolean didPlayerwin(){
+        return checkHorizontal(currentPlayer.getColor())
+                || checkVertical(currentPlayer.getColor());
+    }
+
+    private void endGame(){
+        System.out.println("\n" + "Congratulations, player " + currentPlayer.getColor() + ". You've won!");
+        winner = true;
+    }
+
+    private boolean checkHorizontal(Color color){
+        boolean win = false;
+        Color[][] board = getBoard();
+        int count = 0;
+        for (int i = 0; i < rowSize; i++) {
+            for (int j = 0; j < colSize; j++) {
+                if (board[i][j].equals(color)){
+                    count++;
+                }
+                else {count = 0;}
+            }
+            if (count == 4){
+                win = true;
+            }
+        }
+        return win;
+    }
+
+    private boolean checkVertical(Color color){
+        boolean win = false;
+        Color[][] board = getBoard();
+        int count = 0;
+        for (int j = 0; j < colSize; j++) {
+            for (int i = 0; i < rowSize; i++) {
+                if (board[i][j].equals(color)){
+                    count++;
+                }
+                else {count = 0;}
+            }
+            if (count == 4){
+                win = true;
+            }
+        }
+        return win;
+    }
+
     public void run() {
-        boolean winner = false;
         while (!winner){
-            displayBoard();
             playerMove();
         }
+    }
 
+    public Color[][] getBoard() {
+        return board;
     }
 
     public static void main(String[] args) {
