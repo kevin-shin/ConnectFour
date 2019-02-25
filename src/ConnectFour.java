@@ -143,7 +143,7 @@ public class ConnectFour {
     private boolean checkVertical(){
         boolean win = false;
         Color[][] board = getBoard();
-        for (int i = 0; i < rowSize-2; i++) {
+        for (int i = 0; i < rowSize-3; i++) {
             for (int j = 0; j < colSize; j++) {
                 if ((board[i][j].equals(Color.RED) || board[i][j].equals(Color.BLACK)) &&
                         board[i][j].equals(board[i+1][j]) &&
