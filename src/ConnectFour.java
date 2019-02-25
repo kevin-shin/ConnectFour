@@ -19,6 +19,7 @@ import java.util.Scanner;
 
 public class ConnectFour {
 
+
     /*********INNER CLASSES************/
     enum Color {
         RED, BLACK, EMPTY}
@@ -33,7 +34,7 @@ public class ConnectFour {
         }
     }
 
-    public ConnectFour(){};
+    public ConnectFour(){}
 
     private int colSize = 7;
     private int rowSize = 6;
@@ -122,6 +123,8 @@ public class ConnectFour {
     }
 
     /***************   CHECKERS FOR BOARD CONFIGURATION **************/
+    //Loops through board, checking if there's a match. Need inner loop to
+    //stop at colSize-3 to avoid index-out-of-bounds error.
     private boolean checkHorizontal() {
         boolean win = false;
         Color[][] board = getBoard();
@@ -137,7 +140,8 @@ public class ConnectFour {
         }
         return win;
     }
-
+    //Loops through board, checking if there's a match. Need inner look to
+    //stop at rowSize-3 to avoid index-out-of-bounds error.
     private boolean checkVertical(){
         boolean win = false;
         Color[][] board = getBoard();
@@ -154,9 +158,12 @@ public class ConnectFour {
         return win;
     }
 
+
     private boolean checkDiagonal() {
         boolean win = false;
         Color[][] board = getBoard();
+        //Checks diagonals which go from bottom-right to top-left. This gives us the range
+        //of going from rowSize-1 --> 3, and colSize-1 --> 3
         for (int i = rowSize-1; i > 2; i--) {
             for (int j = colSize-1; j > 2; j--) {
                 if ((board[i][j].equals(Color.RED) || board[i][j].equals(Color.BLACK)) &&
@@ -167,6 +174,8 @@ public class ConnectFour {
                 }
             }
         }
+        //Checks diagonals which go from bottom-left to top-right. This gives us the range
+        //of going from rowSize-1 --> 3, and 0 --> colSize-4
         for (int i = rowSize-1; i > 2; i--) {
             for (int j = 0; j < colSize-3; j++) {
                 if ((board[i][j].equals(Color.RED) || board[i][j].equals(Color.BLACK)) &&
@@ -180,6 +189,7 @@ public class ConnectFour {
         return win;
     }
 
+    /*************    MAIN METHOD    *************/
     public void run() {
         while (!winner){
             playerMove();
@@ -199,11 +209,10 @@ public class ConnectFour {
             if ((!input.equalsIgnoreCase("Yes"))){
                 playAgain = false;
             }
-
         }
     }
 
-    /**************    HELPER FUNCTIONS  **************/
+    /**************    HELPER FUNCTIONS   **************/
     public void displayBoard() {
         for (int i = 0; i < colSize; i++) {
             System.out.print("  " + i + "   ");
