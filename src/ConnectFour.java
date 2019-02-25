@@ -9,6 +9,10 @@
  *
  * The program is set up so that, by default, the program starts with player RED. Further, at the end of each game,
  * the users are prompted to choose whether to start a new round.
+ *
+ * INSTRUCTIONS:
+ *    Users should run the main method by any IDE of their choice, or compiling the file through the Terminal.
+ *
  */
 
 import java.util.Scanner;
@@ -16,7 +20,6 @@ import java.util.Scanner;
 public class ConnectFour {
 
     /*********INNER CLASSES************/
-
     enum Color {
         RED, BLACK, EMPTY}
 
