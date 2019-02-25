@@ -1,4 +1,15 @@
+/**
+ * Kevin Shin
+ * Rent the Runway Take Home Code Challenge
+ * Submitted 2/25
+ *
+ * ConnectFour.java is a program which executes a game of Connect4 between two players
+ * through the console. Users are prompted to type in the column number to which they
+ * would like to place their piece, and the turns alternate until
+ */
+
 import java.util.Scanner;
+
 
 public class ConnectFour {
     enum Color {
@@ -73,13 +84,30 @@ public class ConnectFour {
         System.out.println("It's your turn player " + currentPlayer.getColor() + ". Which column would you like to choose?");
         updateBoard();
         if (didPlayerwin()){
-            displayBoard();
-            endGame();
+            winner = true;
+            System.out.println("\n" + "Congratulations, player " + currentPlayer.getColor() + ". You've won!");
+        }
+        else if (!playable()){
+            winner = true;
+            System.out.println("\n"+ "Stalemate.");
         }
         else {
             switchPlayer();
         }
     }
+
+    private boolean playable(){
+        for (int i = 0; i < rowSize; i++) {
+            for (int j = 0; j < colSize; j++) {
+                Color cell = board[i][j];
+                if (cell.equals(Color.EMPTY)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     private void updateBoard() {
         while (true) {
@@ -117,11 +145,6 @@ public class ConnectFour {
         return checkHorizontal()
                 || checkVertical()
                 || checkDiagonal();
-    }
-
-    private void endGame(){
-        System.out.println("\n" + "Congratulations, player " + currentPlayer.getColor() + ". You've won!");
-        winner = true;
     }
 
     private boolean checkHorizontal() {
